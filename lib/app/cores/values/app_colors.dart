@@ -14,5 +14,7 @@ class AppColors {
   static const levelFour = Color(0xFF5687A8);
   static const levelFive = Color(0xFF57885C);
 
+  static const primaryRed = Color(0xFFFF000F);
+
 
 }

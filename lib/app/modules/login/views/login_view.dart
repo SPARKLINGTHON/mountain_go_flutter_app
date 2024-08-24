@@ -14,74 +14,72 @@ class LoginView extends BaseView<LoginController> {
 
   @override
   Widget body(BuildContext context) {
-    return Obx(() {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.transparency,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.transparency,
+            ),
+            width: 206,
+            height: 247,
+            child: Image.asset("assets/images/logo.png"),
+          ),
+          const SizedBox(
+            height: 195,
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.primaryPlaceholder,
+            ),
+            width: 206,
+            height: 42,
+            child: TextField(
+              obscureText: false,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'ID',
               ),
-              width: 206,
-              height: 247,
-              child: Image.asset("assets/images/logo.png"),
+              controller: controller.idController,
             ),
-            const SizedBox(
-              height: 195,
+          ),
+          const SizedBox(
+            height: 14,
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.primaryPlaceholder,
             ),
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.primaryPlaceholder,
+            width: 206,
+            height: 42,
+            child: TextField(
+              obscureText: true,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'PW',
               ),
-              width: 206,
-              height: 42,
-              child: TextField(
-                obscureText: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'ID',
-                ),
-                controller: controller.idController,
-              ),
+              controller: controller.pwController,
             ),
-            const SizedBox(
-              height: 14,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.primaryPlaceholder,
-              ),
-              width: 206,
-              height: 42,
-              child: TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'PW',
-                ),
-                controller: controller.pwController,
-              ),
-            ),
-            const SizedBox(
-              height: 36,
-            ),
-            ElevatedButton(
-              onPressed: controller.onLoginPressed(),
-              style: ElevatedButton.styleFrom(fixedSize: const Size(206, 42)),
-              child: Text(
-                "login ${controller.click_count.value}",
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+          ),
+          const SizedBox(
+            height: 36,
+          ),
+          ElevatedButton(
+            onPressed: controller.onLoginPressed(),
+            style: ElevatedButton.styleFrom(fixedSize: const Size(206, 42)),
+            child: const Text(
+              "login",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
               ),
             ),
-          ],
-        ),
-      );
-    });
+          ),
+        ],
+      ),
+    );
   }
 
   @override

@@ -9,8 +9,6 @@ import '../../../routes/app_pages.dart';
 import '../repository/login_repository.dart';
 
 class LoginController extends GetxController {
-  RxInt click_count = 0.obs;
-
   final LoginRepository _loginRepository =
       Get.find<LoginRepository>(tag: (LoginRepository).toString());
 

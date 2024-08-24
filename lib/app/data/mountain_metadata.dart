@@ -15,7 +15,7 @@ class MountainMetadata {
       name: json['name'],
       level: json['level'],
       conquerDate: json['conquerDate'] != null ? DateTime.parse(json['conquerDate']) : null,
-      conquered: json['conquered'] == 1,
+      conquered: json['conquered'] == true,
     );
   }
 }
