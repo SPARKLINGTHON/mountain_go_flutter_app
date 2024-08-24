@@ -1,5 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/cores/bases/base_safe_area_view.dart';
@@ -8,6 +9,8 @@ import 'package:myapp/app/cores/widgets/appbar.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
 import 'package:myapp/app/modules/main/controllers/main_controller.dart';
 import "dart:math" as math;
+
+import 'package:toggle_switch/toggle_switch.dart';
 
 class MainView extends BaseSafeAreaView<MainController> {
   MainView({super.key});
@@ -31,33 +34,45 @@ class MainView extends BaseSafeAreaView<MainController> {
               width: 50,
               height: 50,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
-            Text(
+            const Text(
               "산 도감",
               style: TextStyle(fontSize: 20),
             ),
-            // AnimatedToggleSwitch.size(
-            //   current: controller.isAscending,
-            //   values: [
-            //     const [0, 1]
-            //   ],
-            // )
+            const Expanded(child: SizedBox()),
+            Obx(() {
+              return ToggleSwitch(
+                initialLabelIndex: controller.isAscending ? 0 : 1,
+                totalSwitches: 2,
+                labels: ['쉬운 레벨 순', '어려운 레벨 순'],
+                onToggle: (index) {
+                  controller.itemSort(index ?? 0);
+                },
+                minWidth: 110,
+                inactiveBgColor: AppColors.transparency,
+                inactiveFgColor: CupertinoColors.inactiveGray,
+                activeBgColor: [AppColors.primaryPlaceholder],
+                activeFgColor: Colors.black,
+              );
+            })
           ],
         ),
         Expanded(
-          child: GridView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, childAspectRatio: 92 / 127),
-            itemBuilder: (BuildContext context, int index) {
-              return mountainCard(
-                  context, controller.mountainMetadataList[index]);
-            },
-            itemCount: controller.mountainMetadataList.length,
-          ),
+          child: Obx(() {
+            return GridView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, childAspectRatio: 92 / 127),
+              itemBuilder: (BuildContext context, int index) {
+                return mountainCard(
+                    context, controller.mountainMetadataList[index]);
+              },
+              itemCount: controller.mountainMetadataList.length,
+            );
+          }),
         ),
       ],
     );
@@ -132,7 +147,7 @@ class MainView extends BaseSafeAreaView<MainController> {
                             color: AppColors.primaryRed,
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Achieve",
                           style: TextStyle(
                             color: AppColors.primaryRed,

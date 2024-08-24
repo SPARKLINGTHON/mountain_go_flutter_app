@@ -4,11 +4,15 @@ import 'package:get/get.dart';
 import 'package:myapp/app/cores/values/app_colors.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
 
-class MainController extends GetxController{
-  final RxList<MountainMetadata> _rxMountainMetadataList = RxList<MountainMetadata>.empty();
-  List<MountainMetadata> get mountainMetadataList =>  _rxMountainMetadataList.value;
+class MainController extends GetxController {
+  final RxList<MountainMetadata> _rxMountainMetadataList =
+      RxList<MountainMetadata>.empty();
+
+  List<MountainMetadata> get mountainMetadataList =>
+      _rxMountainMetadataList.value;
 
   final RxBool _isAscending = true.obs;
+
   bool get isAscending => _isAscending.value;
 
   @override
@@ -17,8 +21,8 @@ class MainController extends GetxController{
     super.onInit();
   }
 
-  Color levelColor(int level){
-    switch(level){
+  Color levelColor(int level) {
+    switch (level) {
       case 1:
         return AppColors.levelOne;
       case 2:
@@ -34,20 +38,18 @@ class MainController extends GetxController{
     }
   }
 
-  VoidCallback gridItemTapped(){
-    return (){
-
-    };
+  VoidCallback gridItemTapped() {
+    return () {};
   }
 
-  void ascendingSort(){
-    List<MountainMetadata> temp = mountainMetadataList;
-    temp.sort((a, b) => a.level.compareTo(b.level));
-    _rxMountainMetadataList(temp);
-  }
-  void descendingSort(){
-    List<MountainMetadata> temp = mountainMetadataList;
-    temp.sort((a, b) => a.level.compareTo(b.level));
-    _rxMountainMetadataList(List.from(temp.reversed));
+  void itemSort(int condition) {
+    bool tempAscending = condition == 0 ? true : false;
+
+    if (isAscending != tempAscending) {
+      List<MountainMetadata> temp = mountainMetadataList;
+      temp.sort((a, b) => a.level.compareTo(b.level));
+      _rxMountainMetadataList(List.from(tempAscending ? temp : temp.reversed));
+      _isAscending(!isAscending);
+    }
   }
 }
