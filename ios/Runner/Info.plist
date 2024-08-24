@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSCameraUsageDescription</key>
+    <string>We need to use your camera to take photos.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need to access your photo library to choose photos.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need to use your microphone to record videos.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -45,5 +51,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show GPS data.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location to show GPS data.</string>
 </dict>
 </plist>
