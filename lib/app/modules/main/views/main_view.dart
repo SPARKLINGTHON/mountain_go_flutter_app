@@ -5,8 +5,6 @@ import 'package:myapp/app/cores/widgets/appbar.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
 import 'package:myapp/app/modules/main/controllers/main_controller.dart';
 
-import '../../../cores/values/app_colors.dart';
-
 class MainView extends BaseSafeAreaView<MainController> {
   MainView({super.key});
 
@@ -38,50 +36,53 @@ class MainView extends BaseSafeAreaView<MainController> {
   }
 
   Widget mountainCard(BuildContext context, MountainMetadata data) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          Center(
-            child: Container(
-              decoration: BoxDecoration(
-                color: controller.levelColor(data.level),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Container(
-                        color: Colors.black,
+    return GestureDetector(
+      onTap: controller.gridItemTapped,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: controller.levelColor(data.level),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Container(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      for (int i = 1; i <= data.level; i++)
-                        const Icon(
-                          Icons.star,
-                          color: Colors.yellow,
-                          size: 16,
-                        ),
-                    ],
-                  ),
-                  Text(
-                    data.name,
-                    style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ],
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 1; i <= data.level; i++)
+                          const Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 16,
+                          ),
+                      ],
+                    ),
+                    Text(
+                      data.name,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

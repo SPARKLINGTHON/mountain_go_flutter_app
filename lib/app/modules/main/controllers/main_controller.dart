@@ -30,4 +30,10 @@ class MainController extends GetxController{
         return AppColors.levelFive;
     }
   }
+
+  VoidCallback gridItemTapped(){
+    return (){
+
+    };
+  }
 }
