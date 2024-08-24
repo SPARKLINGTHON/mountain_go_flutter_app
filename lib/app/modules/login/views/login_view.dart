@@ -5,8 +5,8 @@ import 'package:myapp/app/cores/values/app_colors.dart';
 import 'package:myapp/app/cores/widgets/appbar.dart';
 import 'package:myapp/app/modules/main/controllers/main_controller.dart';
 
-class MainView extends BaseView<MainController> {
-  MainView({super.key});
+class LoginView extends BaseView<MainController> {
+  LoginView({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
