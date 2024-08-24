@@ -26,7 +26,7 @@ class LoginController extends GetxController {
 
   VoidCallback onLoginPressed() {
     return () {
-      mountainInfoRequest();
+      mountainInfoRequest(id: _idController.text);
       Get.toNamed(Routes.MAIN, arguments: {
         "mountainMetadataList":
         mountainMetadataList
@@ -34,10 +34,9 @@ class LoginController extends GetxController {
     };
   }
 
-  Future<void> mountainInfoRequest() async {
+  Future<void> mountainInfoRequest({required String id}) async {
     try {
-      var request = _loginRepository.getMountainInfo();
-
+      var request = _loginRepository.getMountainInfo(id : id);
       MountainInfoResponse response = await request;
 
       if (response.type != "SUCCESS") {
