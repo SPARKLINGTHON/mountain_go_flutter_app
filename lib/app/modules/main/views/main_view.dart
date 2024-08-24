@@ -84,82 +84,101 @@ class MainView extends BaseSafeAreaView<MainController> {
   }
 
   Widget mountainCard(BuildContext context, MountainMetadata data) {
-    return GestureDetector(
-        onTap: controller.gridItemTapped,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-            children: [
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: controller.levelColor(data.level),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: CachedNetworkImage(
-                              imageUrl: data.imageLink,
-                              placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            )),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (int i = 1; i <= data.level; i++)
-                            const Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 16,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: controller.gridItemTapped(data),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: controller.levelColor(data.level),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fitHeight,
+                            imageUrl: data.imageLink,
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          )),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                for (int i = 1; i <= data.level; i++)
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                    size: 12,
+                                  ),
+                                for (int i = 1; i <= 5 - data.level; i++)
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.grey,
+                                    size: 12,
+                                  ),
+                              ],
                             ),
-                        ],
-                      ),
-                      Text(
-                        data.name,
-                        style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                            SizedBox(height: 3,)
+                          ],
+                        ),
+                        const SizedBox(width: 10,),
+                        Text(
+                          data.name,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              if (data.conquered)
-                Positioned(
-                  child: Center(
-                    child: Transform.rotate(
-                      angle: -19.7 * math.pi / 180,
-                      child: Container(
-                        width: 150,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            width: 5,
-                            color: AppColors.primaryRed,
-                          ),
+            ),
+            if (data.conquered)
+              Positioned(
+                child: Center(
+                  child: Transform.rotate(
+                    angle: -19.7 * math.pi / 180,
+                    child: Container(
+                      width: 150,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          width: 5,
+                          color: AppColors.primaryRed,
                         ),
-                        child: const Text(
-                          "Achieve",
-                          style: TextStyle(
-                            color: AppColors.primaryRed,
-                            fontSize: 30,
-                          ),
+                      ),
+                      child: const Text(
+                        "Achieve",
+                        style: TextStyle(
+                          color: AppColors.primaryRed,
+                          fontSize: 30,
                         ),
                       ),
                     ),
                   ),
-                )
-            ],
-          ),
-        ));
+                ),
+              )
+          ],
+        ),
+      ),
+    );
   }
 }

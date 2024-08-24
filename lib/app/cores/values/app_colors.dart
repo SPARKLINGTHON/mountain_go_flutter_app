@@ -15,6 +15,7 @@ class AppColors {
   static const levelFive = Color(0xFF57885C);
 
   static const primaryRed = Color(0xFFFF000F);
+  static const dialogBackground = Color(0xFFFBF3E8);
 
 
 }
