@@ -22,12 +22,13 @@ class LoginView extends BaseView<LoginController> {
           children: [
             Container(
               decoration: const BoxDecoration(
-                color: AppColors.primaryPlaceholder,
+                color: AppColors.transparency,
               ),
               width: 206,
               height: 247,
+              child: Image.asset("assets/images/logo.png"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 195,
             ),
             Container(
@@ -38,13 +39,14 @@ class LoginView extends BaseView<LoginController> {
               height: 42,
               child: TextField(
                 obscureText: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'ID',
                 ),
+                controller: controller.idController,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             Container(
@@ -55,23 +57,22 @@ class LoginView extends BaseView<LoginController> {
               height: 42,
               child: TextField(
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'PW',
                 ),
+                controller: controller.pwController,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 36,
             ),
             ElevatedButton(
-              onPressed: () {
-                controller.button_tapped();
-              },
-              style: ElevatedButton.styleFrom(fixedSize: Size(206, 42)),
+              onPressed: controller.onLoginPressed(),
+              style: ElevatedButton.styleFrom(fixedSize: const Size(206, 42)),
               child: Text(
                 "login ${controller.click_count.value}",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                 ),
