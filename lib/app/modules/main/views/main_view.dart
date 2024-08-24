@@ -1,3 +1,4 @@
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,12 @@ class MainView extends BaseSafeAreaView<MainController> {
               "산 도감",
               style: TextStyle(fontSize: 20),
             ),
+            // AnimatedToggleSwitch.size(
+            //   current: controller.isAscending,
+            //   values: [
+            //     const [0, 1]
+            //   ],
+            // )
           ],
         ),
         Expanded(
@@ -82,7 +89,7 @@ class MainView extends BaseSafeAreaView<MainController> {
                         child: Padding(
                             padding: const EdgeInsets.all(5),
                             child: CachedNetworkImage(
-                              imageUrl: 'https://via.placeholder.com/350x150',
+                              imageUrl: data.imageLink,
                               placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator()),
                               errorWidget: (context, url, error) =>
@@ -110,31 +117,32 @@ class MainView extends BaseSafeAreaView<MainController> {
                   ),
                 ),
               ),
-              if(data.conquered)Positioned(
-                child: Center(
-                  child: Transform.rotate(
-                    angle: -19.7 * math.pi / 180,
-                    child: Container(
-                      width: 150,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          width: 5,
-                          color: AppColors.primaryRed,
+              if (data.conquered)
+                Positioned(
+                  child: Center(
+                    child: Transform.rotate(
+                      angle: -19.7 * math.pi / 180,
+                      child: Container(
+                        width: 150,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            width: 5,
+                            color: AppColors.primaryRed,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        "Achieve",
-                        style: TextStyle(
-                          color: AppColors.primaryRed,
-                          fontSize: 30,
+                        child: Text(
+                          "Achieve",
+                          style: TextStyle(
+                            color: AppColors.primaryRed,
+                            fontSize: 30,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
             ],
           ),
         ));

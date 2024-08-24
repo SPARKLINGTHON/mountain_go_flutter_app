@@ -8,6 +8,9 @@ class MainController extends GetxController{
   final RxList<MountainMetadata> _rxMountainMetadataList = RxList<MountainMetadata>.empty();
   List<MountainMetadata> get mountainMetadataList =>  _rxMountainMetadataList.value;
 
+  final RxBool _isAscending = true.obs;
+  bool get isAscending => _isAscending.value;
+
   @override
   void onInit() {
     _rxMountainMetadataList(Get.arguments["mountainMetadataList"]);
@@ -35,5 +38,16 @@ class MainController extends GetxController{
     return (){
 
     };
+  }
+
+  void ascendingSort(){
+    List<MountainMetadata> temp = mountainMetadataList;
+    temp.sort((a, b) => a.level.compareTo(b.level));
+    _rxMountainMetadataList(temp);
+  }
+  void descendingSort(){
+    List<MountainMetadata> temp = mountainMetadataList;
+    temp.sort((a, b) => a.level.compareTo(b.level));
+    _rxMountainMetadataList(List.from(temp.reversed));
   }
 }
