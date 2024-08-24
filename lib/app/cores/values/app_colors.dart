@@ -7,4 +7,12 @@ class AppColors {
   static const nameColor = Color(0xFF12831F);
   static const primaryWhite = Color(0xFFFFFFFF);
   static const appbarColor = Color(0xFF56B6AB);
+
+  static const levelOne = Color(0xFFBCB1B1);
+  static const levelTwo = Color(0xFF66777E);
+  static const levelThree = Color(0xFFD9D9D9);
+  static const levelFour = Color(0xFF5687A8);
+  static const levelFive = Color(0xFF57885C);
+
+
 }

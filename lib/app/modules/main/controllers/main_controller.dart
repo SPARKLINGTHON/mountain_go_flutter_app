@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
+import 'package:myapp/app/cores/values/app_colors.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
 
 class MainController extends GetxController{
@@ -9,5 +12,22 @@ class MainController extends GetxController{
   void onInit() {
     _rxMountainMetadataList(Get.arguments["mountainMetadataList"]);
     super.onInit();
+  }
+
+  Color levelColor(int level){
+    switch(level){
+      case 1:
+        return AppColors.levelOne;
+      case 2:
+        return AppColors.levelOne;
+      case 3:
+        return AppColors.levelOne;
+      case 4:
+        return AppColors.levelOne;
+      case 5:
+        return AppColors.levelOne;
+      default:
+        return AppColors.levelOne;
+    }
   }
 }
