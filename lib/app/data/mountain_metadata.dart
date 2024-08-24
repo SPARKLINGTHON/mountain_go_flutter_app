@@ -1,7 +1,7 @@
 class MountainMetadata {
   String name;
   int level;
-  DateTime conquerDate;
+  DateTime? conquerDate;
   bool conquered;
 
   MountainMetadata(
@@ -13,8 +13,8 @@ class MountainMetadata {
   factory MountainMetadata.fromJson(Map<String, dynamic> json) {
     return MountainMetadata(
       name: json['name'],
-      level: int.parse(json['level']),
-      conquerDate: DateTime.parse(json['conquerDate']),
+      level: json['level'],
+      conquerDate: json['conquerDate'] != null ? DateTime.parse(json['conquerDate']) : null,
       conquered: json['conquered'] == 1,
     );
   }

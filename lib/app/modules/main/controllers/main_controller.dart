@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
+import 'package:myapp/app/data/mountain_metadata.dart';
 
 class MainController extends GetxController{
-  RxInt click_count = 0.obs;
+  final RxList<MountainMetadata> _rxMountainMetadataList = RxList<MountainMetadata>.empty();
+  List<MountainMetadata> get mountainMetadataList =>  _rxMountainMetadataList.value;
 
-  void button_tapped(){
-
+  @override
+  void onInit() {
+    _rxMountainMetadataList(Get.arguments["mountainMetadataList"]);
+    super.onInit();
   }
-
-
 }

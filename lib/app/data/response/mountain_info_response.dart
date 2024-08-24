@@ -25,6 +25,6 @@ class MountainInfoResult {
   factory MountainInfoResult.fromJson(Map<String, dynamic> json) {
     return MountainInfoResult(
         mountainMetadataList: List<MountainMetadata>.from(
-            json['bookMetadataList'].map((e) => MountainMetadata.fromJson(e))));
+            json['result'].map((e) => MountainMetadata.fromJson(e))));
   }
 }

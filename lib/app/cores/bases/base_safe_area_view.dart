@@ -14,13 +14,16 @@ abstract class BaseSafeAreaView<Controller extends GetxController>
   bool? extendBodyBehindAppBar;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: globalKey,
-        extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
-        appBar: appBar(context),
-        body: body(context),
-        bottomNavigationBar: bottomNavigationBar(context),
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Scaffold(
+          key: globalKey,
+          extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
+          appBar: appBar(context),
+          body: body(context),
+          bottomNavigationBar: bottomNavigationBar(context),
+        ),
       ),
     );
   }

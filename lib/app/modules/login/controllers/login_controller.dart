@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
@@ -56,6 +57,9 @@ class LoginController extends GetxController {
   _handleMountainInfoRequestOnSuccess(MountainInfoResponse response) {
     try {
       _rxMountainMetadataList(response.result?.mountainMetadataList);
+      if (kDebugMode) {
+        print("success");
+      }
     } catch (error) {
       debugPrint(error.toString());
     }
