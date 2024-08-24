@@ -8,7 +8,7 @@ import '../modules/main/views/main_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.DEFAULT_ROUTE;
+  static const INITIAL = Routes.LOGIN_PAGE;
 
   static final List<GetPage> routes = [
     GetPage(
@@ -17,7 +17,7 @@ class AppPages {
       binding: LoginBindings(),
     ),
     GetPage(
-      name: Routes.DEFAULT_ROUTE,
+      name: Routes.MAIN,
       page: () => MainView(),
       binding: MainBindings(),
     ),

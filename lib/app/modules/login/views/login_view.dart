@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/cores/bases/base_view.dart';
 import 'package:myapp/app/cores/values/app_colors.dart';
-import 'package:myapp/app/cores/widgets/appbar.dart';
-import 'package:myapp/app/modules/main/controllers/main_controller.dart';
+import 'package:myapp/app/modules/login/controllers/login_controller.dart';
 
-class LoginView extends BaseView<MainController> {
+class LoginView extends BaseView<LoginController> {
   LoginView({super.key});
 
   @override
