@@ -9,8 +9,8 @@ class LoginRepositoryImpl implements LoginRepository{
   final _source = Get.find<LoginDataSource>(tag: (LoginDataSource).toString());
 
   @override
-  Future<MountainInfoResponse> getMountainInfo({required String id}) {
-    return _source.getMountainInfo(id: id);
+  Future<MountainInfoResponse> getMountainInfo() {
+    return _source.getMountainInfo();
   }
 
 }

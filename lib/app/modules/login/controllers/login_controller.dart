@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
 import 'package:myapp/app/data/response/mountain_info_response.dart';
@@ -13,6 +14,7 @@ class LoginController extends GetxController {
   final LoginRepository _loginRepository =
       Get.find<LoginRepository>(tag: (LoginRepository).toString());
 
+  static final _storage = FlutterSecureStorage();
 
   final TextEditingController _idController = TextEditingController();
   TextEditingController get idController => _idController;
@@ -25,6 +27,7 @@ class LoginController extends GetxController {
 
   VoidCallback onLoginPressed() {
     return () async {
+      await _storage.write(key: "id", value: idController.text);
       await mountainInfoRequest();
       Get.toNamed(Routes.MAIN, arguments: {
         "mountainMetadataList":
@@ -33,9 +36,9 @@ class LoginController extends GetxController {
     };
   }
 
-  Future<void> mountainInfoRequest({required String id}) async {
+  Future<void> mountainInfoRequest() async {
     try {
-      var request = _loginRepository.getMountainInfo(id : id);
+      var request = _loginRepository.getMountainInfo();
       MountainInfoResponse response = await request;
 
       if (response.type != "SUCCESS") {
