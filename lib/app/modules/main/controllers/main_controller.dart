@@ -19,15 +19,21 @@ class MainController extends GetxController{
       case 1:
         return AppColors.levelOne;
       case 2:
-        return AppColors.levelOne;
+        return AppColors.levelTwo;
       case 3:
-        return AppColors.levelOne;
+        return AppColors.levelThree;
       case 4:
-        return AppColors.levelOne;
+        return AppColors.levelFour;
       case 5:
-        return AppColors.levelOne;
+        return AppColors.levelFive;
       default:
-        return AppColors.levelOne;
+        return AppColors.levelFive;
     }
+  }
+
+  VoidCallback gridItemTapped(){
+    return (){
+
+    };
   }
 }

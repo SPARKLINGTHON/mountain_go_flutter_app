@@ -15,20 +15,19 @@ class MainView extends BaseSafeAreaView<MainController> {
 
   @override
   Widget body(BuildContext context) {
-    // return Obx(() {
-    //   return SliverGrid(
-    //     delegate: SliverChildBuilderDelegate(
-    //       (context, index) {
-    //         return mountainCard(
-    //             context, controller.mountainMetadataList[index]);
-    //       },
-    //       childCount: controller.mountainMetadataList.length
-    //     ),
-    //     gridDelegate:
-    //         const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-    //   );
-    // });
-    return Container();
+    return SizedBox(
+        width: Get.width,
+        height: Get.height,
+        child: GridView.builder(
+          scrollDirection: Axis.vertical,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 92 / 127),
+          itemBuilder: (BuildContext context, int index) {
+            return mountainCard(
+                context, controller.mountainMetadataList[index]);
+          },
+          itemCount: controller.mountainMetadataList.length,
+        ));
   }
 
   @override
@@ -37,19 +36,54 @@ class MainView extends BaseSafeAreaView<MainController> {
   }
 
   Widget mountainCard(BuildContext context, MountainMetadata data) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: controller.levelColor(data.level),
-          ),
-          width: 92,
-          height: 127,
+    return GestureDetector(
+      onTap: controller.gridItemTapped,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: controller.levelColor(data.level),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Container(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 1; i <= data.level; i++)
+                          const Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 16,
+                          ),
+                      ],
+                    ),
+                    Text(
+                      data.name,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        Positioned(
-          child: Container(),
-        )
-      ],
+      ),
     );
   }
 }

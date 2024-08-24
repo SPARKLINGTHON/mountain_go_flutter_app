@@ -13,20 +13,19 @@ class LoginController extends GetxController {
   final LoginRepository _loginRepository =
       Get.find<LoginRepository>(tag: (LoginRepository).toString());
 
-  final RxList<MountainMetadata> _rxMountainMetadataList = RxList.empty();
 
   final TextEditingController _idController = TextEditingController();
   TextEditingController get idController => _idController;
   final TextEditingController _pwController = TextEditingController();
   TextEditingController get pwController => _pwController;
 
-
+  final RxList<MountainMetadata> _rxMountainMetadataList = RxList.empty();
   List<MountainMetadata> get mountainMetadataList =>
-      _rxMountainMetadataList.toList();
+      _rxMountainMetadataList.value;
 
   VoidCallback onLoginPressed() {
-    return () {
-      mountainInfoRequest(id: _idController.text);
+    return () async {
+      await mountainInfoRequest();
       Get.toNamed(Routes.MAIN, arguments: {
         "mountainMetadataList":
         mountainMetadataList
@@ -57,7 +56,7 @@ class LoginController extends GetxController {
     try {
       _rxMountainMetadataList(response.result?.mountainMetadataList);
       if (kDebugMode) {
-        print("success");
+        print("${mountainMetadataList.length}");
       }
     } catch (error) {
       debugPrint(error.toString());
