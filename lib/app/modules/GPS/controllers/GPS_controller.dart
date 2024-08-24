@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../../routes/app_pages.dart';
 class GPSController extends GetxController {
   // 위치 정보를 표시할 RxString 변수
   final RxString _locationMessage = "Press the button to get location".obs;
@@ -56,10 +57,20 @@ class GPSController extends GetxController {
         },
       );
       if (response.statusCode == 201) {
-        final responseData = jsonDecode(response.body);
-        final int id = responseData['id'];
-        final String name = responseData['name'];
-        _locationMessage.value = "ID: $id, Name: $name";
+        if(response.body==''){
+          _locationMessage.value = "no mountain nearby";
+        }
+        else{
+          final responseData = jsonDecode(response.body);
+          final int id = responseData['id'];
+          final String name = responseData['name'];
+          Get.toNamed(Routes.ADD_IMAGE_PAGE, arguments: {
+            "mountainId" : id,
+            "mountainName": name,
+          });
+          //_locationMessage.value = "ID: $id, Name: $name";
+        }
+
       } else {
         _locationMessage.value = "Failed to post location: ${response.reasonPhrase}";
       }

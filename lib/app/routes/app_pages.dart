@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import 'package:myapp/app/modules/addImage/bindings//addImage_bindings.dart';
+import 'package:myapp/app/modules/addImage/views/addImage_view.dart';
+
 import 'package:myapp/app/modules/GPS/bindings//GPS_bindings.dart';
 import 'package:myapp/app/modules/GPS/views/GPS_view.dart';
 
@@ -29,6 +32,11 @@ class AppPages {
       name: Routes.GPS_PAGE,
       page: () => GPSView(),
       binding: GPSBindings(),
+    ),
+    GetPage(
+      name: Routes.ADD_IMAGE_PAGE,
+      page: () => AddImageView(),
+      binding: AddimageBindings(),
     ),
   ];
 }
