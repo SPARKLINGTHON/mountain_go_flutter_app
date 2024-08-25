@@ -10,7 +10,7 @@ class GPSController extends GetxController {
   final RxString _locationMessage = "Press the button to get location".obs;
   String get locationMessage => _locationMessage.value;
 
-  final String _serverUrl = "http://43.201.65.109:3000/api/gps/api/gps/validate";
+  final String _serverUrl = "http://43.201.65.109:3000/api/gps/validate";
   // 위치를 가져오는 메서드
   Future<void> getCurrentLocation() async {
     bool serviceEnabled;
@@ -64,7 +64,7 @@ class GPSController extends GetxController {
           final responseData = jsonDecode(response.body);
           final int id = responseData['id'];
           final String name = responseData['name'];
-          Get.toNamed(Routes.ADD_IMAGE_PAGE, arguments: {
+          Get.offAndToNamed(Routes.ADD_IMAGE_PAGE, arguments: {
             "mountainId" : id,
             "mountainName": name,
           });
@@ -72,7 +72,8 @@ class GPSController extends GetxController {
         }
 
       } else {
-        _locationMessage.value = "Failed to post location: ${response.reasonPhrase}";
+        _locationMessage.value = "${response.statusCode}"+ "Failed to post location: ${response.reasonPhrase}";
+
       }
     } catch (e) {
       _locationMessage.value = "Error: ${e.toString()}";

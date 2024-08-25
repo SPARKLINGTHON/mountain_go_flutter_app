@@ -41,6 +41,7 @@ dependencies:
   cached_network_image: ^3.4.1
   animated_toggle_switch: ^0.8.3
   geolocator: ^8.2.1
+  camera: ^0.9.4+5
   image_picker: ^0.8.7+3
   toggle_switch: ^2.3.0
   share_plus: ^10.0.2
@@ -73,6 +74,8 @@ flutter:
      - assets/images/logo.png
      - assets/images/mountain_icon.png
      - assets/images/dialog.png
+     - assets/images/mountain.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

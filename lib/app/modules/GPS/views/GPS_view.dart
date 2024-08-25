@@ -14,9 +14,6 @@ class GPSView extends BaseView<GPSController> {
 
   @override
   Widget body(BuildContext context) {
-    // GetX를 통해 GPSController 인스턴스 가져오기
-    final GPSController controller = Get.find<GPSController>();
-
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -32,9 +29,6 @@ class GPSView extends BaseView<GPSController> {
           ),
           const SizedBox(height: 36),
           Container(
-            decoration: const BoxDecoration(
-              color: AppColors.primaryPlaceholder,
-            ),
             width: 206,
             height: 42,
             child: ElevatedButton(

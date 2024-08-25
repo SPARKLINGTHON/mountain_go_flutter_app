@@ -1,11 +1,15 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../../data/mountain_metadata.dart';
+import '../../../data/response/mountain_info_response.dart';
 import '../../../routes/app_pages.dart';
+import '../../login/repository/login_repository.dart';
 
 class AddImageController extends GetxController {
   final ImagePicker _picker = ImagePicker();
@@ -16,10 +20,17 @@ class AddImageController extends GetxController {
   final int mountainId = Get.arguments['mountainId'];
   final String mountainName = Get.arguments['mountainName'];
   static final _storage = FlutterSecureStorage();
+
+  final RxList<MountainMetadata> _rxMountainMetadataList = RxList.empty();
+  List<MountainMetadata> get mountainMetadataList =>
+      _rxMountainMetadataList.value;
+
+  final LoginRepository _loginRepository =
+  Get.find<LoginRepository>(tag: (LoginRepository).toString());
   // 이미지 선택 메서드
   Future<void> pickImage() async {
     try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         _selectedImage.value = File(pickedFile.path);
       } else {
@@ -41,8 +52,8 @@ class AddImageController extends GetxController {
       // 쿼리 파라미터를 URL에 포함
       var request = http.MultipartRequest(
         'POST',
-        //Uri.parse("$_serverUrl?userId=${await _storage.read(key: "id")}&mountainId=$mountainId"),
-        Uri.parse("$_serverUrl?userId=1000&mountainId=$mountainId"), //임시로 1000으로 해둠. 나중에 위에 코드로 변경 필요
+        Uri.parse("$_serverUrl?userId=${await _storage.read(key: "id")}&mountainId=$mountainId"),
+        // Uri.parse("$_serverUrl?userId=1000&mountainId=$mountainId"), //임시로 1000으로 해둠. 나중에 위에 코드로 변경 필요
       );
 
       // 이미지 파일 추가
@@ -60,13 +71,46 @@ class AddImageController extends GetxController {
       // 응답 처리
       if (response.statusCode == 201) {
         print("Image uploaded successfully.");
-        //Get.toNamed(Routes.MAIN, arguments: {
-        //}); 여기에 취합할때 mountain metadata를 줘야함.
+        await mountainInfoRequest();
+        Get.offNamedUntil(Routes.MAIN, (route) => false, arguments: {
+          "mountainMetadataList":
+          mountainMetadataList
+        });
       } else {
         print("Failed to upload image. Status code: ${response.statusCode}");
       }
     } catch (e) {
       print("Error uploading image: $e");
+    }
+  }
+
+  Future<void> mountainInfoRequest() async {
+    try {
+      var request = _loginRepository.getMountainInfo();
+      MountainInfoResponse response = await request;
+
+      if (response.type != "SUCCESS") {
+        throw Exception("type is not success");
+      }
+
+      if (response.result == null) {
+        throw Exception("result is null");
+      }
+
+      await _handleMountainInfoRequestOnSuccess(response);
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  _handleMountainInfoRequestOnSuccess(MountainInfoResponse response) {
+    try {
+      _rxMountainMetadataList(response.result?.mountainMetadataList);
+      if (kDebugMode) {
+        print("${mountainMetadataList.length}");
+      }
+    } catch (error) {
+      debugPrint(error.toString());
     }
   }
 }

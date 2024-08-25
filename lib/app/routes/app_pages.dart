@@ -15,7 +15,7 @@ import '../modules/main/views/main_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.GPS_PAGE;
+  static const INITIAL = Routes.LOGIN_PAGE;
 
   static final List<GetPage> routes = [
     GetPage(

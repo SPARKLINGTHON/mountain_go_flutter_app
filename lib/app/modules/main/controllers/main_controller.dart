@@ -10,27 +10,41 @@ import 'package:myapp/app/data/mountain_metadata.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
-class MainController extends GetxController {
+import '../../../routes/app_pages.dart';
+
+class MainController extends FullLifeCycleController with FullLifeCycleMixin {
   final RxList<MountainMetadata> _rxMountainMetadataList =
       RxList<MountainMetadata>.empty();
 
   List<MountainMetadata> get mountainMetadataList =>
       _rxMountainMetadataList.value;
 
-  final RxBool _isAscending = true.obs;
+  final RxBool _isAscending = false.obs;
 
   bool get isAscending => _isAscending.value;
 
   static const _storage = FlutterSecureStorage();
+  RxString _rxId = "".obs;
+
+  String get id => _rxId.value;
 
   WidgetsToImageController widgetsToImageController =
       WidgetsToImageController();
   Uint8List? bytes;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     _rxMountainMetadataList(Get.arguments["mountainMetadataList"]);
+    itemSort(0);
+    _rxId(await getId());
     super.onInit();
+  }
+
+  @override
+  void onResumed() {
+    _rxMountainMetadataList(Get.arguments["mountainMetadataList"]);
+    itemSort(0);
+    update();
   }
 
   Color levelColor(int level) {
@@ -128,6 +142,19 @@ class MainController extends GetxController {
           ),
         ),
         Positioned(
+          top: 355,
+          left: 0,
+          right: 0,
+          child: Text(
+            data.name,
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Positioned(
           left: 105.5,
           right: 120,
           bottom: 80,
@@ -143,7 +170,7 @@ class MainController extends GetxController {
               ),
               Text(
                 await _storage.read(key: "id") ?? "",
-                style: TextStyle(fontSize: 5),
+                style: const TextStyle(fontSize: 5),
               ),
             ],
           ),
@@ -162,5 +189,35 @@ class MainController extends GetxController {
         )
       ],
     );
+  }
+
+  VoidCallback onRegisterClicked() {
+    return () {
+      Get.toNamed(Routes.GPS_PAGE);
+    };
+  }
+
+  @override
+  void onDetached() {
+    // TODO: implement onDetached
+  }
+
+  @override
+  void onHidden() {
+    // TODO: implement onHidden
+  }
+
+  @override
+  void onInactive() {
+    // TODO: implement onInactive
+  }
+
+  @override
+  void onPaused() {
+    // TODO: implement onPaused
+  }
+
+  Future<String?> getId() {
+    return _storage.read(key: "id");
   }
 }

@@ -1,11 +1,9 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/cores/bases/base_safe_area_view.dart';
 import 'package:myapp/app/cores/values/app_colors.dart';
-import 'package:myapp/app/cores/widgets/appbar.dart';
 import 'package:myapp/app/data/mountain_metadata.dart';
 import 'package:myapp/app/modules/main/controllers/main_controller.dart';
 import "dart:math" as math;
@@ -17,62 +15,117 @@ class MainView extends BaseSafeAreaView<MainController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return MyAppbar.main(nickname: "Kelly");
+    return AppBar(
+        centerTitle: false,
+        toolbarHeight: 45,
+        backgroundColor: AppColors.appbarColor,
+        titleSpacing: 20,
+        automaticallyImplyLeading: false,
+        title: Obx(() {
+          return Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                    text: controller.id,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      color: AppColors.nameColor,
+                    )),
+                const TextSpan(
+                    text: '님, 오늘도 등산하러 가볼까요?',
+                    style:
+                        TextStyle(fontSize: 17, color: AppColors.primaryWhite)),
+              ],
+            ),
+          );
+        }));
   }
 
   @override
   Widget body(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Row(
+        Column(
           children: [
-            const SizedBox(
-              width: 15,
+            Row(
+              children: [
+                const SizedBox(
+                  width: 15,
+                ),
+                Image.asset(
+                  "assets/images/mountain_icon.png",
+                  width: 50,
+                  height: 50,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                const Text(
+                  "산 도감",
+                  style: TextStyle(fontSize: 20),
+                ),
+                const Expanded(child: SizedBox()),
+                Obx(() {
+                  return ToggleSwitch(
+                    initialLabelIndex: controller.isAscending ? 0 : 1,
+                    totalSwitches: 2,
+                    labels: const ['쉬운 레벨 순', '어려운 레벨 순'],
+                    onToggle: (index) {
+                      controller.itemSort(index ?? 0);
+                    },
+                    minWidth: 110,
+                    inactiveBgColor: AppColors.transparency,
+                    inactiveFgColor: CupertinoColors.inactiveGray,
+                    activeBgColor: const [AppColors.primaryPlaceholder],
+                    activeFgColor: Colors.black,
+                  );
+                })
+              ],
             ),
-            Image.asset(
-              "assets/images/mountain_icon.png",
-              width: 50,
-              height: 50,
+            Expanded(
+              child: Obx(() {
+                return GridView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, childAspectRatio: 92 / 127),
+                  itemBuilder: (BuildContext context, int index) {
+                    return mountainCard(
+                        context, controller.mountainMetadataList[index]);
+                  },
+                  itemCount: controller.mountainMetadataList.length,
+                );
+              }),
             ),
-            const SizedBox(
-              width: 5,
-            ),
-            const Text(
-              "산 도감",
-              style: TextStyle(fontSize: 20),
-            ),
-            const Expanded(child: SizedBox()),
-            Obx(() {
-              return ToggleSwitch(
-                initialLabelIndex: controller.isAscending ? 0 : 1,
-                totalSwitches: 2,
-                labels: ['쉬운 레벨 순', '어려운 레벨 순'],
-                onToggle: (index) {
-                  controller.itemSort(index ?? 0);
-                },
-                minWidth: 110,
-                inactiveBgColor: AppColors.transparency,
-                inactiveFgColor: CupertinoColors.inactiveGray,
-                activeBgColor: [AppColors.primaryPlaceholder],
-                activeFgColor: Colors.black,
-              );
-            })
           ],
         ),
-        Expanded(
-          child: Obx(() {
-            return GridView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, childAspectRatio: 92 / 127),
-              itemBuilder: (BuildContext context, int index) {
-                return mountainCard(
-                    context, controller.mountainMetadataList[index]);
-              },
-              itemCount: controller.mountainMetadataList.length,
-            );
-          }),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: AppColors.bottomButtonBackground,
+            ),
+            width: Get.width,
+            height: 45,
+          ),
+        ),
+        Positioned(
+          bottom: -30,
+          left: 0,
+          right: 50,
+          child: Image.asset("assets/images/mountain.png"),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: TextButton(
+            onPressed: controller.onRegisterClicked(),
+            child: const Text(
+              "산 등록하기",
+              style: TextStyle(color: AppColors.primaryWhite, fontSize: 15),
+            ),
+          ),
         ),
       ],
     );
@@ -135,10 +188,14 @@ class MainView extends BaseSafeAreaView<MainController> {
                                   ),
                               ],
                             ),
-                            SizedBox(height: 3,)
+                            const SizedBox(
+                              height: 3,
+                            )
                           ],
                         ),
-                        const SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           data.name,
                           style: const TextStyle(
