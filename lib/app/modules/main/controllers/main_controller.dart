@@ -60,7 +60,7 @@ class MainController extends FullLifeCycleController with FullLifeCycleMixin {
       case 5:
         return AppColors.levelFive;
       default:
-        return AppColors.levelFive;
+        return AppColors.levelOne;
     }
   }
 
