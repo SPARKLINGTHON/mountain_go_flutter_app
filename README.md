@@ -1,2 +1,2 @@
-# myapp_template
-myapp_template
+# MountainGo flutter app
+Travel and Hike with MountainGO!
