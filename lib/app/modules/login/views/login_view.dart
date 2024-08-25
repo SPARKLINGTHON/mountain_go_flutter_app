@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:myapp/app/cores/bases/base_view.dart';
 import 'package:myapp/app/cores/values/app_colors.dart';
 import 'package:myapp/app/modules/login/controllers/login_controller.dart';

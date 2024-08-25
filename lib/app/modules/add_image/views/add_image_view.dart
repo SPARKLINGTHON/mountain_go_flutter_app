@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/app/cores/bases/base_view.dart';  // BaseView의 경로
-import 'package:myapp/app/cores/values/app_colors.dart';  // AppColors의 경로
-import '../controllers/addImage_controller.dart';
+import 'package:myapp/app/cores/bases/base_view.dart';
+import '../controllers/add_image_controller.dart';
 
 class AddImageView extends BaseView<AddImageController> {
   AddImageView({super.key});
@@ -17,7 +16,6 @@ class AddImageView extends BaseView<AddImageController> {
     final AddImageController controller = Get.find<AddImageController>();
 
     // Arguments로 전달된 mountainId와 mountainName을 받음
-    final int mountainId = Get.arguments['mountainId'];
     final String mountainName = Get.arguments['mountainName'];
 
     return Center(
@@ -28,16 +26,20 @@ class AddImageView extends BaseView<AddImageController> {
           const SizedBox(height: 20),
           Obx(() {
             return controller.selectedImage == null
-                ? const SizedBox(height:300, width: 300, child: DecoratedBox(
-            decoration: BoxDecoration(
-            color: Colors.black,
-            ),
-            ),)
+                ? const SizedBox(
+                    height: 300,
+                    width: 300,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
                 : Image.file(
-              controller.selectedImage!,
-              width: 300,
-              height: 300,
-            );
+                    controller.selectedImage!,
+                    width: 300,
+                    height: 300,
+                  );
           }),
           const SizedBox(height: 20),
           ElevatedButton(

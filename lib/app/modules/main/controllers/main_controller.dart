@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ class MainController extends FullLifeCycleController with FullLifeCycleMixin {
   bool get isAscending => _isAscending.value;
 
   static const _storage = FlutterSecureStorage();
-  RxString _rxId = "".obs;
+  final RxString _rxId = "".obs;
 
   String get id => _rxId.value;
 
@@ -74,11 +73,11 @@ class MainController extends FullLifeCycleController with FullLifeCycleMixin {
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(0))),
               child: WidgetsToImage(
-                  child: await certificateWidget(data),
-                  controller: widgetsToImageController)),
+                  controller: widgetsToImageController,
+                  child: await certificateWidget(data))),
         );
       } else {
-        Get.snackbar("error", "우선 해당 산을 정복해야합니다.");
+        Get.snackbar("error", "우선 해당 산을 정복 해야 합니다.");
       }
     };
   }
@@ -98,14 +97,18 @@ class MainController extends FullLifeCycleController with FullLifeCycleMixin {
     return () async {
       final bytes = await widgetsToImageController.capture();
       if (bytes == null) {
-        print("bytes are null");
+        if (kDebugMode) {
+          print("bytes are null");
+        }
         return;
       }
       XFile xFile = XFile.fromData(bytes, mimeType: 'image/png');
       final result = await Share.shareXFiles([xFile]);
 
       if (result.status == ShareResultStatus.success) {
-        print('Thank you for sharing the picture!');
+        if (kDebugMode) {
+          print('Thank you for sharing the picture!');
+        }
       }
     };
   }
@@ -147,10 +150,7 @@ class MainController extends FullLifeCycleController with FullLifeCycleMixin {
           right: 0,
           child: Text(
             data.name,
-            style: const TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold
-            ),
+            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
         ),

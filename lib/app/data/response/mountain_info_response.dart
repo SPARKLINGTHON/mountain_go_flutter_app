@@ -19,8 +19,7 @@ class MountainInfoResponse {
 class MountainInfoResult {
   List<MountainMetadata> mountainMetadataList;
 
-  MountainInfoResult(
-      {required this.mountainMetadataList});
+  MountainInfoResult({required this.mountainMetadataList});
 
   factory MountainInfoResult.fromJson(Map<String, dynamic> json) {
     return MountainInfoResult(

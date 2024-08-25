@@ -1,16 +1,18 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../routes/app_pages.dart';
+
 class GPSController extends GetxController {
   // 위치 정보를 표시할 RxString 변수
   final RxString _locationMessage = "Press the button to get location".obs;
+
   String get locationMessage => _locationMessage.value;
 
   final String _serverUrl = "http://43.201.65.109:3000/api/gps/validate";
+
   // 위치를 가져오는 메서드
   Future<void> getCurrentLocation() async {
     bool serviceEnabled;
@@ -27,7 +29,8 @@ class GPSController extends GetxController {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse && permission != LocationPermission.always) {
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
         _locationMessage.value = "Location permissions are denied.";
         return;
       }
@@ -39,8 +42,12 @@ class GPSController extends GetxController {
         desiredAccuracy: LocationAccuracy.high,
       );
       // 위치 정보를 문자열로 포맷하여 업데이트
-      print(position.latitude);
-      print(position.longitude);
+      if (kDebugMode) {
+        print(position.latitude);
+      }
+      if (kDebugMode) {
+        print(position.longitude);
+      }
       await _sendLocationToServer(position.latitude, position.longitude);
     } catch (e) {
       _locationMessage.value = "Failed to get location: ${e.toString()}";
@@ -57,23 +64,20 @@ class GPSController extends GetxController {
         },
       );
       if (response.statusCode == 201) {
-        if(response.body==''){
+        if (response.body == '') {
           _locationMessage.value = "no mountain nearby";
-        }
-        else{
+        } else {
           final responseData = jsonDecode(response.body);
           final int id = responseData['id'];
           final String name = responseData['name'];
           Get.offAndToNamed(Routes.ADD_IMAGE_PAGE, arguments: {
-            "mountainId" : id,
+            "mountainId": id,
             "mountainName": name,
           });
           //_locationMessage.value = "ID: $id, Name: $name";
         }
-
       } else {
-        _locationMessage.value = "${response.statusCode}"+ "Failed to post location: ${response.reasonPhrase}";
-
+        _locationMessage.value = "${response.statusCode}" "Failed to post location: ${response.reasonPhrase}";
       }
     } catch (e) {
       _locationMessage.value = "Error: ${e.toString()}";

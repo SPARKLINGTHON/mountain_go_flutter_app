@@ -12,14 +12,17 @@ class LoginController extends GetxController {
   final LoginRepository _loginRepository =
       Get.find<LoginRepository>(tag: (LoginRepository).toString());
 
-  static final _storage = FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage();
 
   final TextEditingController _idController = TextEditingController();
+
   TextEditingController get idController => _idController;
   final TextEditingController _pwController = TextEditingController();
+
   TextEditingController get pwController => _pwController;
 
   final RxList<MountainMetadata> _rxMountainMetadataList = RxList.empty();
+
   List<MountainMetadata> get mountainMetadataList =>
       _rxMountainMetadataList.value;
 
@@ -27,10 +30,8 @@ class LoginController extends GetxController {
     return () async {
       await _storage.write(key: "id", value: idController.text);
       await mountainInfoRequest();
-      Get.toNamed(Routes.MAIN, arguments: {
-        "mountainMetadataList":
-        mountainMetadataList
-      });
+      Get.toNamed(Routes.MAIN,
+          arguments: {"mountainMetadataList": mountainMetadataList});
     };
   }
 

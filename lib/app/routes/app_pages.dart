@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
 
-import 'package:myapp/app/modules/addImage/bindings//addImage_bindings.dart';
-import 'package:myapp/app/modules/addImage/views/addImage_view.dart';
-
 import 'package:myapp/app/modules/GPS/bindings//GPS_bindings.dart';
 import 'package:myapp/app/modules/GPS/views/GPS_view.dart';
 
 import 'package:myapp/app/modules/login/bindings/login_bindings.dart';
 import 'package:myapp/app/modules/login/views/login_view.dart';
 
+import '../modules/add_image/bindings/add_image_bindings.dart';
+import '../modules/add_image/views/add_image_view.dart';
 import '../modules/main/bindings/main_bindings.dart';
 import '../modules/main/views/main_view.dart';
 
@@ -36,7 +35,7 @@ class AppPages {
     GetPage(
       name: Routes.ADD_IMAGE_PAGE,
       page: () => AddImageView(),
-      binding: AddimageBindings(),
+      binding: AddImageBindings(),
     ),
   ];
 }

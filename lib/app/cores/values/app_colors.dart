@@ -17,5 +17,4 @@ class AppColors {
   static const primaryRed = Color(0xFFFF000F);
   static const dialogBackground = Color(0xFFFBF3E8);
   static const bottomButtonBackground = Color(0xFFB69898);
-
 }
