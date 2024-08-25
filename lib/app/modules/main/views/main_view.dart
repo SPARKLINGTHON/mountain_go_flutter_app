@@ -165,43 +165,43 @@ class MainView extends BaseSafeAreaView<MainController> {
                                 const Icon(Icons.error),
                           )),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                for (int i = 1; i <= data.level; i++)
-                                  const Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 12,
-                                  ),
-                                for (int i = 1; i <= 5 - data.level; i++)
-                                  const Icon(
-                                    Icons.star,
-                                    color: Colors.grey,
-                                    size: 12,
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 3,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          data.name,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  for (int i = 1; i <= data.level; i++)
+                                    const Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 12,
+                                    ),
+                                  for (int i = 1; i <= 5 - data.level; i++)
+                                    const Icon(
+                                      Icons.star,
+                                      color: Colors.grey,
+                                      size: 12,
+                                    ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              )
+                            ],
+                          ),
+                          Text(
+                            data.name,
+                            style: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
